@@ -1,6 +1,7 @@
 package com.sysmap.miniautorizador.api.mapper;
 
 import com.sysmap.miniautorizador.api.dto.input.NovoCartaoInput;
+import com.sysmap.miniautorizador.api.dto.response.CartaoResponse;
 import com.sysmap.miniautorizador.domain.model.Cartao;
 import org.springframework.stereotype.Component;
 
@@ -15,5 +16,8 @@ public class CartaoDtoMapper {
         cartao.setSaldo(null);
 
         return cartao;
+    }
+    public CartaoResponse toCartaoResponse(Cartao cartao){
+        return new CartaoResponse(cartao.getNumeroCartao(), cartao.getSenha());
     }
 }
