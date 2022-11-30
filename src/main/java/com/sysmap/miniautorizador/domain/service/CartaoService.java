@@ -5,6 +5,8 @@ import com.sysmap.miniautorizador.domain.model.Cartao;
 import com.sysmap.miniautorizador.domain.repository.CartaoRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 
 @Service
 public class CartaoService {
@@ -15,7 +17,7 @@ public class CartaoService {
         this.cartaoRepository=repository;
     }
 
-    public Cartao salvarCartao(Cartao cartao){
+    public Cartao criarCartao(Cartao cartao){
 
         cartaoRepository.findCartaoByNumeroCartao(cartao.getNumeroCartao())
                 .ifPresent( (i)-> {
@@ -24,7 +26,8 @@ public class CartaoService {
                     );
                 });
 
-          return this.cartaoRepository.save(cartao);
+        cartao.setSaldo(BigDecimal.valueOf(500));
+        return this.cartaoRepository.save(cartao);
     }
 
 }
