@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,4 +50,22 @@ public class CartaoRepositoryTest {
         List<Cartao> cartoes=cartaoRepository.findAll();
         assertEquals(cartoes.size(),3);
     }
+
+    @Test
+    public void quando_buscar_cartao_pelo_numero_retorna_cartao(){
+        Cartao cartao=this.cartaoRepository.findCartaoByNumeroCartao("0376586897098000").get();
+
+        assertAll(
+                ()->assertNotNull(cartao),
+                ()->assertEquals(cartao.getNumeroCartao(),"0376586897098000")
+        );
+    }
+
+    @Test
+    public void deve_lancar_NoSuchElementException_ao_buscar_cartao_pelo_numero(){
+
+        assertThrows(NoSuchElementException.class,
+                ()->this.cartaoRepository.findCartaoByNumeroCartao("0376586888098000").get()
+                );
+         }
 }
