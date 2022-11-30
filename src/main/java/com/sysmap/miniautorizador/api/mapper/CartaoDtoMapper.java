@@ -11,8 +11,9 @@ public class CartaoDtoMapper {
     public Cartao toCartao(NovoCartaoInput novoCartaoInput){
         Cartao cartao=new Cartao();
 
-        cartao.setSenha(cartao.getSenha());
-        cartao.setNumeroCartao(cartao.getNumeroCartao());
+        cartao.setSenha(novoCartaoInput.getSenha());
+        cartao.setNumeroCartao(novoCartaoInput.getNumeroCartao());
+        
         cartao.setSaldo(null);
 
         return cartao;
