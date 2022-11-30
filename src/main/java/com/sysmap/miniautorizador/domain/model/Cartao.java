@@ -2,9 +2,11 @@ package com.sysmap.miniautorizador.domain.model;
 
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import java.math.BigDecimal;
 
 @Entity
 public class Cartao {
@@ -14,6 +16,8 @@ public class Cartao {
     private Long id;
     private String numeroCartao;
     private String senha;
+
+    private BigDecimal saldo;
 
     public Long getId() {
         return id;
@@ -37,5 +41,13 @@ public class Cartao {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
     }
 }
