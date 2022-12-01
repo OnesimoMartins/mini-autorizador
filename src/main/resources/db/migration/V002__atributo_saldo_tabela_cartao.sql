@@ -1,0 +1,1 @@
+alter table cartao add column saldo decimal(19,2) not null default 500 after senha;
