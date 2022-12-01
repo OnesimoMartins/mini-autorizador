@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -50,6 +51,20 @@ public class CartaoRestControllerTest {
                 .andExpect(status().is(201));
 
     }
+    @Test
+    public void deve_retornar_200_ao_consultar_saldo_criar_cartao() throws Exception {
+
+        when(cartaoService.findCartaoByNumeroOrThrows(CartaoSalvo().getNumeroCartao()))
+                .thenReturn(CartaoSalvo());
+
+        when(cartaoDtoMapper.toCartao(NovoCartaoInput())).thenReturn(CartaoSemId());
+
+        mvc.perform(get(String.format("/cartoes/%s",CartaoSalvo().getNumeroCartao()))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(content().string("10"));
+    }
+
 
     @MethodSource("getNovosCartoesInvalidos")
     @ParameterizedTest
@@ -86,6 +101,7 @@ public class CartaoRestControllerTest {
     private Cartao CartaoSalvo(){
         Cartao cartao=this.CartaoSemId();
         cartao.setId(4L);
+        cartao.setSaldo(BigDecimal.TEN);
         return cartao;
     }
 
