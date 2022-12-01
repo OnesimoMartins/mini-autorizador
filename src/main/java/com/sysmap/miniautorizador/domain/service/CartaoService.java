@@ -20,14 +20,14 @@ public class CartaoService {
     public Cartao criarCartao(Cartao cartao){
 
         cartaoRepository.findCartaoByNumeroCartao(cartao.getNumeroCartao())
-                .ifPresent( (i)-> {
+                .ifPresent( (it)-> {
                     throw new CartaoJaExistenteException(
-                    String.format(  "cartão com o número '%s' já existente",cartao.getNumeroCartao())
+                    String.format(  "cartão com o número '%s' já existente",cartao.getNumeroCartao()),it
                     );
                 });
 
         cartao.setSaldo(BigDecimal.valueOf(500));
-        return this.cartaoRepository.save(cartao);
+          return this.cartaoRepository.save(cartao);
     }
 
 }
