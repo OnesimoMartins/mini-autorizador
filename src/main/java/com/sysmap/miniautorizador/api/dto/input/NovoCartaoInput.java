@@ -26,4 +26,12 @@ public class NovoCartaoInput {
     public String getNumeroCartao() {
         return numeroCartao;
     }
+
+    @Override
+    public String toString() {
+        return "NovoCartaoInput{" +
+                "numeroCartao='" + numeroCartao + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
 }
