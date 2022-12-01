@@ -18,4 +18,11 @@ public class CartaoResponse {
         return senha;
     }
 
+    @Override
+    public String toString() {
+        return "CartaoResponse{" +
+                "numeroCartao='" + numeroCartao + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
 }
