@@ -2,9 +2,7 @@ package com.sysmap.miniautorizador.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sysmap.miniautorizador.api.dto.input.NovoCartaoInput;
-import com.sysmap.miniautorizador.api.dto.response.CartaoResponse;
 import com.sysmap.miniautorizador.api.mapper.CartaoDtoMapper;
-import com.sysmap.miniautorizador.domain.model.Cartao;
 import com.sysmap.miniautorizador.domain.service.CartaoService;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
@@ -18,11 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import  static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static com.sysmap.miniautorizador.utils.IntegrationTestsUtils.*;
 
 @WebMvcTest(CartaoRestController.class)
 public class CartaoRestControllerTest {
@@ -76,7 +74,7 @@ public class CartaoRestControllerTest {
                 .andExpect(status().is(400));
     }
 
-     private static Stream<Arguments> getNovosCartoesInvalidos(){
+    private static Stream<Arguments> getNovosCartoesInvalidos(){
         return Stream.of(
                 Arguments.of(new NovoCartaoInput("982635472765827a","1234")),
                 Arguments.of(new NovoCartaoInput("9826354727658279","123")),
@@ -84,25 +82,4 @@ public class CartaoRestControllerTest {
                 Arguments.of(new NovoCartaoInput("9826354727658271",""))
         );
     }
-
-    private CartaoResponse CartaoResponse(){
-     return new CartaoResponse("9826354727658271","1234");
-    }
-    private NovoCartaoInput NovoCartaoInput(){
-       return new NovoCartaoInput("9826354727658271","1234");
-    }
-    private Cartao CartaoSemId(){
-        Cartao cartao= new Cartao();
-        cartao.setSenha("1234");
-        cartao.setNumeroCartao("9826354727658271");
-        return cartao;
-    }
-
-    private Cartao CartaoSalvo(){
-        Cartao cartao=this.CartaoSemId();
-        cartao.setId(4L);
-        cartao.setSaldo(BigDecimal.TEN);
-        return cartao;
-    }
-
 }
