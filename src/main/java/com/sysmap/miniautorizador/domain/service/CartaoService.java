@@ -1,6 +1,7 @@
 package com.sysmap.miniautorizador.domain.service;
 
 import com.sysmap.miniautorizador.domain.exception.CartaoJaExistenteException;
+import com.sysmap.miniautorizador.domain.exception.CartaoNaoExistenteException;
 import com.sysmap.miniautorizador.domain.model.Cartao;
 import com.sysmap.miniautorizador.domain.repository.CartaoRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,13 @@ public class CartaoService {
 
         cartao.setSaldo(BigDecimal.valueOf(500));
           return this.cartaoRepository.save(cartao);
+    }
+
+    public Cartao findCartaoByNumeroOrThrows(String numeroCartao){
+        return cartaoRepository.findCartaoByNumeroCartao(numeroCartao)
+                .orElseThrow(()-> new  CartaoNaoExistenteException(
+                        String.format(  "cartão com o número '%s' não existe",numeroCartao)
+                ));
     }
 
 }
