@@ -6,6 +6,7 @@ import com.sysmap.miniautorizador.api.mapper.CartaoDtoMapper;
 import com.sysmap.miniautorizador.domain.model.Cartao;
 import com.sysmap.miniautorizador.domain.service.CartaoService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,8 @@ public class CartaoRestController {
         this.cartaoDtoMapper=cartaoDtoMapper;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces =MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus(HttpStatus.CREATED)
     public CartaoResponse criarNovoCartao(@Valid @RequestBody NovoCartaoInput novoCartaoInput){
 
