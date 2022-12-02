@@ -51,6 +51,10 @@ public class Cartao {
         this.saldo = saldo;
     }
 
+    public void debitar(BigDecimal valor){
+      this.setSaldo(this.getSaldo().subtract(valor));
+    }
+
     @Override
     public String toString() {
         return "Cartao{" +
