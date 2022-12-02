@@ -50,4 +50,14 @@ public class Cartao {
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
+
+    @Override
+    public String toString() {
+        return "Cartao{" +
+                "id=" + id +
+                ", numeroCartao='" + numeroCartao + '\'' +
+                ", senha='" + senha + '\'' +
+                ", saldo=" + saldo +
+                '}';
+    }
 }
