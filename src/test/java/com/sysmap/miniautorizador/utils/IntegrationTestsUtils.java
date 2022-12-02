@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class IntegrationTestsUtils {
 
+    public static final String NUMERO_CARTAO="6549873025634501";
+    public static final String SENHA="1234";
+
         public static Cartao CartaoSemId(){
             Cartao cartao= new Cartao();
             cartao.setSenha("1234");
