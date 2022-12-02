@@ -50,4 +50,18 @@ public class Cartao {
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
+
+    public void debitar(BigDecimal valor){
+      this.setSaldo(this.getSaldo().subtract(valor));
+    }
+
+    @Override
+    public String toString() {
+        return "Cartao{" +
+                "id=" + id +
+                ", numeroCartao='" + numeroCartao + '\'' +
+                ", senha='" + senha + '\'' +
+                ", saldo=" + saldo +
+                '}';
+    }
 }
