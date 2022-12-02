@@ -1,6 +1,7 @@
 package com.sysmap.miniautorizador.domain.service;
 
 import com.sysmap.miniautorizador.domain.exception.CartaoJaExistenteException;
+import com.sysmap.miniautorizador.domain.exception.CartaoNaoExistenteException;
 import com.sysmap.miniautorizador.domain.model.Cartao;
 import com.sysmap.miniautorizador.domain.repository.CartaoRepository;
 import org.junit.jupiter.api.Test;
@@ -68,8 +69,41 @@ public class CartaoServiceTest {
 
         assertThrows(CartaoJaExistenteException.class,
                 ()->cartaoService.criarCartao(novoCartao)
-                );
+        );
 
+    }
+
+    @Test
+    public void deve_retornar_Cartao_quando_buscar_por_numero(){
+
+        final Cartao cartao =CartaSalvo();
+        String numeroCartao=cartao.getNumeroCartao();
+
+
+        when(cartaoRepository.findCartaoByNumeroCartao(numeroCartao))
+                .thenReturn(Optional.of( CartaSalvo() ));
+
+        Cartao resultado =cartaoService.findCartaoByNumeroOrThrows(numeroCartao);
+
+                assertEquals(resultado.getNumeroCartao(),numeroCartao);
+
+    }
+    @Test
+    public void deve_lancar_CartaoNaoExistenteException_quando_buscar_cartao(){
+        String numeroCartao= "0000000000000000";
+
+        when(cartaoRepository.findCartaoByNumeroCartao(numeroCartao))
+                .thenReturn(Optional.empty());
+
+        assertThrows(CartaoNaoExistenteException.class,
+                ()->cartaoService.findCartaoByNumeroOrThrows(numeroCartao));
+    }
+
+    private  Cartao CartaSalvo(){
+        Cartao cartao= new Cartao();
+        cartao.setNumeroCartao("0987635467816253");
+        cartao.setSenha("2456");
+        return cartao;
     }
 
 }
