@@ -21,7 +21,7 @@ public class IntegrationTestsUtils {
         }
 
        public static NovoCartaoInput NovoCartaoInput(){
-        return new NovoCartaoInput("9826354727658271","1234");
+        return new NovoCartaoInput(NUMERO_CARTAO,SENHA);
         }
 
         public static ResultMatcher isCartaoValido(){

@@ -1,8 +1,7 @@
 package com.sysmap.miniautorizador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
@@ -15,16 +14,18 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static com.sysmap.miniautorizador.utils.IntegrationTestsUtils.NovoCartaoInput;
-import static com.sysmap.miniautorizador.utils.IntegrationTestsUtils.isCartaoValido;
+import static com.sysmap.miniautorizador.utils.IntegrationTestsUtils.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 
 @Testcontainers
 @SpringBootTest
 @AutoConfigureWebMvc
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MiniAutorizadorApplicationIntegrationTests {
 
 	@Autowired
@@ -49,6 +50,7 @@ class MiniAutorizadorApplicationIntegrationTests {
 
 
 	@Test
+	@Order(1)
 	@DisplayName("criação de um cartão")
 	public void criar_cartao() throws Exception {
 
@@ -58,6 +60,16 @@ class MiniAutorizadorApplicationIntegrationTests {
 						.content(objectMapper.writeValueAsBytes( NovoCartaoInput()  )))
 				.andExpect(status().is(201))
 				.andExpect(isCartaoValido());
+	}
+
+	@Test
+	@Order(2)
+	@DisplayName("verificação do saldo do cartão recém-criado")
+	public void consultar_saldo_cartao() throws Exception {
+		mvc.perform(get(String.format("/cartoes/%s",NUMERO_CARTAO))
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string("500.00"));
 	}
 
 }
