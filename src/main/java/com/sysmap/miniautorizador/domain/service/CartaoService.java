@@ -31,6 +31,10 @@ public class CartaoService {
           return this.cartaoRepository.save(cartao);
     }
 
+    public Cartao actualizarCartao(Cartao cartao){
+        return this.cartaoRepository.save(cartao);
+    }
+
     public Cartao findCartaoByNumeroOrThrows(String numeroCartao){
         return cartaoRepository.findCartaoByNumeroCartao(numeroCartao)
                 .orElseThrow(()-> new  CartaoNaoExistenteException(
